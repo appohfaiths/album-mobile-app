@@ -46,7 +46,7 @@ const albumSlice = createSlice({
     builder.addCase(fetchAlbums.rejected, (state, action) => {
       state.isLoading = false;
       state.albums = [];
-      state.error = action.error.message || '';
+      state.error = action.error.message || 'Something went wrong';
     });
   },
 });
