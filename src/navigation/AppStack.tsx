@@ -2,36 +2,31 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {AppStackParamList, HomeStackParamList} from './types';
 import {Home, AlbumDisplay} from 'screens';
 
-export type RootStackParamList = {
-  HomeStack: undefined;
-  Home: undefined;
-  AlbumDisplay: undefined;
-};
+const Tab = createBottomTabNavigator<AppStackParamList>();
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
-const Tab = createBottomTabNavigator<RootStackParamList>();
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-const HomeStack = () => {
+const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator
+    <HomeStack.Navigator
       screenOptions={{
         animation: 'fade',
       }}>
-      <Stack.Screen
+      <HomeStack.Screen
         name="Home"
         component={Home}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="AlbumDisplay"
         component={AlbumDisplay}
-        options={({route}) => ({
-          //   title: route.params?.data.title,
-        })}
+        // options={({route}) => ({
+        //     title: route.params?.data.title,
+        // })}
       />
-    </Stack.Navigator>
+    </HomeStack.Navigator>
   );
 };
 
@@ -47,7 +42,7 @@ export function AppStack(): React.JSX.Element {
       }}>
       <Tab.Screen
         name="HomeStack"
-        component={HomeStack}
+        component={HomeStackNavigator}
         options={({route}) => ({
           tabBarStyle: {
             display: getTabBarVisibility(route),
@@ -61,7 +56,7 @@ export function AppStack(): React.JSX.Element {
 const getTabBarVisibility = (route: any) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
-  if (routeName === 'GameDetails') {
+  if (routeName === 'AlbumDisplay') {
     return 'none';
   } else {
     return 'flex';

@@ -4,7 +4,7 @@ import {useAppSelector, useAppDispatch} from 'redux/app/hooks';
 import {fetchAlbums} from 'redux/features/albums/albumSlice';
 import {AlbumListItem} from 'components';
 
-export function Home({navigation}): React.JSX.Element {
+export function Home(): React.JSX.Element {
   const dispatch = useAppDispatch();
   const albums = useAppSelector(state => state.albums.albums);
   const error = useAppSelector(state => state.albums.error);
