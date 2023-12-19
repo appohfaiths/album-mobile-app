@@ -1,10 +1,12 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 
 export function Home({navigation}): React.JSX.Element {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <SafeAreaView>
+      <View>
+        <Text>Home</Text>
+      </View>
+    </SafeAreaView>
   );
 }

@@ -37,7 +37,14 @@ const HomeStack = () => {
 
 export function AppStack(): React.JSX.Element {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerShown: false,
+        tabBarStyle: {backgroundColor: '#AD40AF'},
+        tabBarInactiveTintColor: 'green',
+        tabBarActiveTintColor: 'red',
+      }}>
       <Tab.Screen
         name="HomeStack"
         component={HomeStack}
