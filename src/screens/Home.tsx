@@ -15,12 +15,12 @@ export function Home(): React.JSX.Element {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View>
         <Text>Home</Text>
         {isLoading && <Text>The albums are loading</Text>}
         {!isLoading && error ? <Text>Error: {error}</Text> : null}
-        {!isLoading && albums.length ? (
+        {!isLoading && albums.length > 0 ? (
           <FlatList
             data={albums}
             renderItem={({item}) => <AlbumListItem album={item} />}
@@ -31,3 +31,9 @@ export function Home(): React.JSX.Element {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

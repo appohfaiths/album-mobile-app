@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Album, AlbumState} from 'types/albumsInterface';
 
 const initialState: AlbumState = {
-  albums: [{userId: 3344, id: 1, title: 'Melo'}],
+  albums: [],
   isLoading: false,
   error: null,
 };
@@ -15,6 +15,15 @@ export const fetchAlbums = createAsyncThunk('albums/getAlbums', () => {
     .get('https://jsonplaceholder.typicode.com/albums')
     .then(res => res.data);
 });
+
+export const deleteAlbum = createAsyncThunk(
+  'albums/deleteAlbum',
+  (id: number) => {
+    return axios
+      .delete(`https://jsonplaceholder.typicode.com/albums/${id}`)
+      .then(res => res.data);
+  },
+);
 
 const albumSlice = createSlice({
   name: 'albums',
