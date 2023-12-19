@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {View, Text, SafeAreaView, FlatList, StyleSheet} from 'react-native';
 import {useAppSelector, useAppDispatch} from 'redux/app/hooks';
 import {fetchAlbums} from 'redux/features/albums/albumSlice';
 import {AlbumListItem} from 'components';
@@ -20,11 +20,13 @@ export function Home(): React.JSX.Element {
         <Text>Home</Text>
         {isLoading && <Text>The albums are loading</Text>}
         {!isLoading && error ? <Text>Error: {error}</Text> : null}
-        {!isLoading && albums.length > 0
-          ? albums.map(album => {
-              return <AlbumListItem key={album.id} album={album} />;
-            })
-          : null}
+        {!isLoading && albums.length ? (
+          <FlatList
+            data={albums}
+            renderItem={({item}) => <AlbumListItem album={item} />}
+            keyExtractor={album => album.id.toString()}
+          />
+        ) : null}
       </View>
     </SafeAreaView>
   );

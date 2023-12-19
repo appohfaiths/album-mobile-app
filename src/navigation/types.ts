@@ -1,5 +1,4 @@
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-// import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import type {RouteProp} from '@react-navigation/native';
 
 export type AppStackParamList = {
@@ -21,8 +20,3 @@ export type AlbumDisplayRouteProp = RouteProp<
   HomeStackParamList,
   'AlbumDisplay'
 >;
-
-// export type HomeStackNavigationProp = BottomTabScreenProps<
-//   AppStackParamList,
-//   'HomeStack'
-// >;
