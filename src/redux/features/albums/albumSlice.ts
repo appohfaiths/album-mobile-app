@@ -1,18 +1,7 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from 'redux/app/store';
 import axios from 'axios';
-
-interface Album {
-  userId: number;
-  id: number;
-  title: string;
-}
-
-interface AlbumState {
-  albums: Album[];
-  isLoading: boolean;
-  error: string | null;
-}
+import {Album, AlbumState} from 'types/albumsInterface';
 
 const initialState: AlbumState = {
   albums: [{userId: 3344, id: 1, title: 'Melo'}],
