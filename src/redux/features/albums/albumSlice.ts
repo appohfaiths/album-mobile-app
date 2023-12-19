@@ -15,7 +15,7 @@ interface AlbumState {
 }
 
 const initialState: AlbumState = {
-  albums: [],
+  albums: [{userId: 3344, id: 1, title: 'Melo'}],
   isLoading: false,
   error: null,
 };
