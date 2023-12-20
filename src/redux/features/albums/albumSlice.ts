@@ -65,8 +65,11 @@ const albumSlice = createSlice({
     builder.addCase(deleteAlbum.pending, state => {
       state.isLoading = true;
     });
-    builder.addCase(deleteAlbum.fulfilled, state => {
+    builder.addCase(deleteAlbum.fulfilled, (state, action) => {
       state.isLoading = false;
+      const deletedAlbumId = action.meta.arg; // Access the ID passed to the thunk
+      state.albums = state.albums.filter(album => album.id !== deletedAlbumId);
+
       state.error = '';
     });
     builder.addCase(deleteAlbum.rejected, (state, action) => {
