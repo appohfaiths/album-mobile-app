@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {List} from 'react-native-paper';
+import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import {PhotoListItemProps} from './types';
+
+const {width} = Dimensions.get('window');
 
 export function PhotoItem({photo}: PhotoListItemProps): React.JSX.Element {
   return (
@@ -14,12 +15,12 @@ export function PhotoItem({photo}: PhotoListItemProps): React.JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
-    width: 110,
+    width: (width - 10) / 2,
     height: 100,
     margin: 5,
   },
   photo: {
-    width: 100,
+    width: null,
     height: 80,
   },
   photoTitle: {
