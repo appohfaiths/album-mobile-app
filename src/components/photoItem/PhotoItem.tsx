@@ -7,24 +7,34 @@ const {width} = Dimensions.get('window');
 export function PhotoItem({photo}: PhotoListItemProps): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <Text style={styles.photoTitle}>{photo.title}</Text>
       <Image source={{uri: photo.url}} style={styles.photo} />
+      <View style={styles.textContainer}>
+        <Text style={styles.photoTitle} numberOfLines={1} ellipsizeMode="tail">
+          {photo.title}
+        </Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: (width - 10) / 2,
-    height: 100,
+    width: (width - 40) / 2,
+    height: 120,
     margin: 5,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   photo: {
-    width: null,
-    height: 80,
+    width: '100%',
+    height: 100,
+  },
+  textContainer: {
+    paddingHorizontal: 5,
+    overflow: 'hidden',
   },
   photoTitle: {
-    fontSize: 10,
+    fontSize: 17,
     margin: 3,
   },
 });

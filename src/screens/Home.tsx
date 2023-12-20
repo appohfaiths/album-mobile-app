@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, SafeAreaView, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {useAppSelector, useAppDispatch} from 'redux/app/hooks';
 import {fetchAlbums} from 'redux/features/albums/albumSlice';
 import {AlbumListItem} from 'components';
@@ -12,13 +19,14 @@ export function Home(): React.JSX.Element {
 
   React.useEffect(() => {
     dispatch(fetchAlbums());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Text>Home</Text>
-        {isLoading && <Text>The albums are loading</Text>}
+        {isLoading && <ActivityIndicator />}
         {!isLoading && error ? <Text>Error: {error}</Text> : null}
         {!isLoading && albums.length > 0 ? (
           <FlatList

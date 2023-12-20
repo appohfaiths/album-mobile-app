@@ -12,11 +12,10 @@ export function AlbumDisplay(): React.JSX.Element {
   // const error = useAppSelector(state => state.photos.error);
   const {id} = route.params;
 
-  console.log(photos);
-  console.log(id);
   return (
     <SafeAreaView>
       <View style={styles.container}>
+        <Text>Album {id}</Text>
         {isLoading && <Text>Loading images</Text>}
         <FlatList
           numColumns={2}
