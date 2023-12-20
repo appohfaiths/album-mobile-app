@@ -25,6 +25,8 @@ export function Home(): React.JSX.Element {
             data={albums}
             renderItem={({item}) => <AlbumListItem album={item} />}
             keyExtractor={album => album.id.toString()}
+            onRefresh={() => dispatch(fetchAlbums())}
+            refreshing={isLoading}
           />
         ) : null}
       </View>
