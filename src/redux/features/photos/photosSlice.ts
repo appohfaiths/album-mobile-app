@@ -11,10 +11,16 @@ const initialState: PhotosState = {
 
 export const fetchPhotos = createAsyncThunk(
   'photos/getPhotos',
-  (albumId: number) => {
-    return axios
-      .get(`https://jsonplaceholder.typicode.com/albums/${albumId}/photos`)
-      .then(res => res.data);
+  async (albumId: number) => {
+    try {
+      const res = await axios.get(
+        `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`,
+      );
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   },
 );
 

@@ -6,6 +6,7 @@ import {AlbumListItemProps} from './types';
 import {HomeScreenNavigationProp} from 'navigation/types';
 import {fetchPhotos} from 'redux/features/photos/photosSlice';
 import {useAppDispatch} from 'redux/app/hooks';
+import {deleteAlbum} from 'redux/features/albums/albumSlice';
 
 export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
   const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -19,6 +20,7 @@ export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
   const handleDelete = e => {
     e.stopPropagation();
     console.log('delete pressed');
+    dispatch(deleteAlbum(album.id));
   };
 
   // eslint-disable-next-line react/no-unstable-nested-components
@@ -29,7 +31,7 @@ export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
   );
 
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.titleContainer}>
         <List.Item
           title={album.title}
@@ -49,13 +51,17 @@ export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
   titleContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'center',
+    alignItems: 'baseline',
   },
   title: {
     flex: 0.9,
+    textAlign: 'center',
   },
   deleteButton: {
     flex: 0.1,
