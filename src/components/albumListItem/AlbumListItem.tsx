@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {List} from 'react-native-paper';
@@ -9,28 +9,37 @@ import {useAppDispatch} from 'redux/app/hooks';
 import {deleteAlbum} from 'redux/features/albums/albumSlice';
 import {capitalise} from 'utils/utils';
 
-export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
+function AlbumListItemComponent({
+  album,
+}: AlbumListItemProps): React.JSX.Element {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const dispatch = useAppDispatch();
-  const handlePress = (e: any) => {
-    e.stopPropagation();
-    dispatch(clearPhotos());
-    dispatch(fetchPhotos(album.id));
-    navigation.navigate('AlbumDisplay', {id: album.id});
-  };
 
-  const handleDelete = (e: any) => {
-    e.stopPropagation();
-    console.log('delete pressed');
-    dispatch(deleteAlbum(album.id));
-  };
+  const handlePress = useCallback(
+    (e: any) => {
+      e.stopPropagation();
+      dispatch(clearPhotos());
+      dispatch(fetchPhotos(album.id));
+      navigation.navigate('AlbumDisplay', {id: album.id});
+    },
+    [dispatch, navigation, album.id],
+  );
+
+  const handleDelete = useCallback(
+    (e: any) => {
+      e.stopPropagation();
+      console.log('delete pressed');
+      dispatch(deleteAlbum(album.id));
+    },
+    [dispatch, album.id],
+  );
 
   // eslint-disable-next-line react/no-unstable-nested-components
-  const DeleteIcon: React.FC = (props: any) => (
+  const DeleteIcon: React.FC = React.memo(props => (
     <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
       <List.Icon {...props} icon="delete" />
     </TouchableOpacity>
-  );
+  ));
 
   return (
     <View style={styles.container}>
@@ -51,6 +60,8 @@ export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
     </View>
   );
 }
+
+export const AlbumListItem = React.memo(AlbumListItemComponent);
 
 const styles = StyleSheet.create({
   container: {
