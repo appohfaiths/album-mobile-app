@@ -28,7 +28,6 @@ function AlbumListItemComponent({
   const handleDelete = useCallback(
     (e: any) => {
       e.stopPropagation();
-      console.log('delete pressed');
       dispatch(deleteAlbum(album.id));
     },
     [dispatch, album.id],

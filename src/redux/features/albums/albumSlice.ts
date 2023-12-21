@@ -29,9 +29,6 @@ export const deleteAlbum = createAsyncThunk(
       );
       const data = response.data;
 
-      // Log the result
-      console.log('Delete Album Result:', data);
-
       return data;
     } catch (error) {
       // Handle errors here
