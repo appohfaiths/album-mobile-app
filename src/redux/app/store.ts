@@ -10,9 +10,6 @@ export const store = configureStore({
     albums: albumReducer,
     photos: photosReducer,
   },
-  // middleware: getDefaultMiddleware => {
-  //   getDefaultMiddleware().concat(logger);
-  // },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

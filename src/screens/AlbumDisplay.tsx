@@ -39,7 +39,7 @@ export function AlbumDisplay(): React.JSX.Element {
       {!isLoading && error ? (
         <View style={styles.activityIndicator}>
           <ErrorStateComponent
-            errorText={'Something went wrong fetching album list!'}
+            errorText={'Something went wrong fetching photos!'}
             onPress={handleTryAgain}
           />
         </View>

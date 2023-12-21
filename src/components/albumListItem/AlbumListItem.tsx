@@ -8,12 +8,14 @@ import {fetchPhotos, clearPhotos} from 'redux/features/photos/photosSlice';
 import {useAppDispatch} from 'redux/app/hooks';
 import {deleteAlbum} from 'redux/features/albums/albumSlice';
 import {capitalise} from 'utils/utils';
+import {ConfirmationDialog} from 'components/confirmationDialog';
 
 function AlbumListItemComponent({
   album,
 }: AlbumListItemProps): React.JSX.Element {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const dispatch = useAppDispatch();
+  const [deleteDialogVisible, setDeleteDialogVisible] = React.useState(false);
 
   const handlePress = useCallback(
     (e: any) => {
@@ -25,13 +27,17 @@ function AlbumListItemComponent({
     [dispatch, navigation, album.id],
   );
 
-  const handleDelete = useCallback(
-    (e: any) => {
-      e.stopPropagation();
-      dispatch(deleteAlbum(album.id));
-    },
-    [dispatch, album.id],
-  );
+  const handleConfirm = useCallback(() => {
+    dispatch(deleteAlbum(album.id));
+    setDeleteDialogVisible(false);
+  }, [dispatch, album.id]);
+
+  const handleDelete = (e: any) => {
+    setDeleteDialogVisible(true);
+    e.stopPropagation();
+  };
+
+  const hideDialog = () => setDeleteDialogVisible(false);
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const DeleteIcon: React.FC = React.memo(props => (
@@ -42,6 +48,12 @@ function AlbumListItemComponent({
 
   return (
     <View style={styles.container}>
+      <ConfirmationDialog
+        title={'Are you sure you want to delete?'}
+        visible={deleteDialogVisible}
+        onConfirm={handleConfirm}
+        onCancel={hideDialog}
+      />
       <TouchableOpacity style={styles.titleContainer}>
         <List.Item
           title={capitalise(album.title)}
