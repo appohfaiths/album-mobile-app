@@ -1,4 +1,9 @@
-import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
+import {
+  createSlice,
+  PayloadAction,
+  createAsyncThunk,
+  createAction,
+} from '@reduxjs/toolkit';
 import {RootState} from 'redux/app/store';
 import axios from 'axios';
 import {Photo, PhotosState} from 'types/photosInterface';
@@ -24,10 +29,18 @@ export const fetchPhotos = createAsyncThunk(
   },
 );
 
+export const clearPhotos = createAction('photos/clearPhotos');
+
 const photosSlice = createSlice({
   name: 'photos',
   initialState,
-  reducers: {},
+  reducers: {
+    clearPhotos: state => {
+      state.photos = [];
+      state.isLoading = false;
+      state.error = null;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(fetchPhotos.pending, state => {
       state.isLoading = true;

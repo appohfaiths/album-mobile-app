@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import {PhotoListItemProps} from './types';
-import {Capitalise} from 'utils/utils';
+import {capitalise} from 'utils/utils';
 
 const {width} = Dimensions.get('window');
 
@@ -11,7 +11,7 @@ export function PhotoItem({photo}: PhotoListItemProps): React.JSX.Element {
       <Image source={{uri: photo.url}} style={styles.photo} />
       <View style={styles.textContainer}>
         <Text style={styles.photoTitle} numberOfLines={1} ellipsizeMode="tail">
-          {Capitalise({lowercaseString: photo.title})}
+          {capitalise(photo.title)}
         </Text>
       </View>
     </View>
@@ -21,10 +21,13 @@ export function PhotoItem({photo}: PhotoListItemProps): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     width: (width - 40) / 2,
-    height: 220,
+    height: 250,
     margin: 5,
     flexDirection: 'column',
     justifyContent: 'center',
+    padding: 5,
+    backgroundColor: '#fff',
+    borderRadius: 10,
   },
   photo: {
     width: '100%',
