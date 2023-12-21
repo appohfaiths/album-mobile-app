@@ -14,7 +14,9 @@ export type HomeStackParamList = {
 export type HomeScreenNavigationProp = NativeStackScreenProps<
   HomeStackParamList,
   'AlbumDisplay'
->;
+> & {
+  navigate: (screen: string, params?: {id: number}) => void;
+};
 
 export type AlbumDisplayRouteProp = RouteProp<
   HomeStackParamList,
