@@ -49,6 +49,7 @@ function AlbumListItemComponent({
   return (
     <View style={styles.container}>
       <ConfirmationDialog
+        icon={'alert-circle'}
         title={'Are you sure you want to delete?'}
         visible={deleteDialogVisible}
         onConfirm={handleConfirm}

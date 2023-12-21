@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import {ConfirmationDialogProps} from './types';
 
 export function ConfirmationDialog({
+  icon,
   title,
   visible,
   onConfirm,
@@ -12,7 +13,7 @@ export function ConfirmationDialog({
   return (
     <Portal>
       <Dialog visible={visible} onDismiss={onCancel}>
-        <Dialog.Icon icon="alert" />
+        <Dialog.Icon icon={icon} />
         <Dialog.Title style={styles.title}>
           {title || 'Confirmation Dialog'}
         </Dialog.Title>
