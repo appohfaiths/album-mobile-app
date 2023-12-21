@@ -25,7 +25,7 @@ export function Home(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text>Home</Text>
+        <Text style={styles.titleText}>Albums</Text>
         {isLoading && <ActivityIndicator />}
         {!isLoading && error ? <Text>Error: {error}</Text> : null}
         {!isLoading && albums.length > 0 ? (
@@ -45,5 +45,13 @@ export function Home(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#eaeaea',
+    marginHorizontal: 10,
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
   },
 });

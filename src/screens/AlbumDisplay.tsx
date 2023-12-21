@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, SafeAreaView, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {AlbumDisplayRouteProp} from 'navigation/types';
 import {PhotoItem} from 'components';
@@ -15,8 +21,7 @@ export function AlbumDisplay(): React.JSX.Element {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text>Album {id}</Text>
-        {isLoading && <Text>Loading images</Text>}
+        {isLoading && <ActivityIndicator />}
         <FlatList
           numColumns={2}
           data={photos}

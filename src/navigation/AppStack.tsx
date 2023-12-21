@@ -2,8 +2,9 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import {AppStackParamList, HomeStackParamList} from './types';
+import {AppStackParamList, HomeStackParamList, TabIconProps} from './types';
 import {Home, AlbumDisplay} from 'screens';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator<AppStackParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -13,6 +14,8 @@ const HomeStackNavigator = () => {
     <HomeStack.Navigator
       screenOptions={{
         animation: 'fade',
+        headerTitle: 'Photos',
+        headerBackTitleVisible: false,
       }}>
       <HomeStack.Screen
         name="Home"
@@ -36,9 +39,9 @@ export function AppStack(): React.JSX.Element {
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
-        tabBarStyle: {backgroundColor: '#AD40AF'},
+        // tabBarStyle: {backgroundColor: '#ccc'},
         tabBarInactiveTintColor: 'green',
-        tabBarActiveTintColor: 'red',
+        tabBarActiveTintColor: '#AD40AF',
       }}>
       <Tab.Screen
         name="HomeStack"
@@ -47,6 +50,9 @@ export function AppStack(): React.JSX.Element {
           tabBarStyle: {
             display: getTabBarVisibility(route),
           },
+          tabBarIcon: ({color, size}) => (
+            <TabIcon name="home-outline" size={size} color={color} />
+          ),
         })}
       />
     </Tab.Navigator>
@@ -61,4 +67,8 @@ const getTabBarVisibility = (route: any) => {
   } else {
     return 'flex';
   }
+};
+
+const TabIcon: React.FC<TabIconProps> = ({name, size, color}) => {
+  return <Ionicons name={name} size={size} color={color} />;
 };

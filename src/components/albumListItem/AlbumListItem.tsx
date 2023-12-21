@@ -7,17 +7,18 @@ import {HomeScreenNavigationProp} from 'navigation/types';
 import {fetchPhotos} from 'redux/features/photos/photosSlice';
 import {useAppDispatch} from 'redux/app/hooks';
 import {deleteAlbum} from 'redux/features/albums/albumSlice';
+import {Capitalise} from 'utils/utils';
 
 export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const dispatch = useAppDispatch();
-  const handlePress = e => {
+  const handlePress = (e: any) => {
     e.stopPropagation();
     dispatch(fetchPhotos(album.id));
     navigation.navigate('AlbumDisplay', {id: album.id});
   };
 
-  const handleDelete = e => {
+  const handleDelete = (e: any) => {
     e.stopPropagation();
     console.log('delete pressed');
     dispatch(deleteAlbum(album.id));
@@ -34,7 +35,7 @@ export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
     <View style={styles.container}>
       <TouchableOpacity style={styles.titleContainer}>
         <List.Item
-          title={album.title}
+          title={Capitalise({lowercaseString: album.title})}
           onPress={handlePress}
           style={styles.title}
         />
@@ -53,6 +54,9 @@ export function AlbumListItem({album}: AlbumListItemProps): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    marginVertical: 5,
+    backgroundColor: '#fff',
+    borderRadius: 10,
   },
   titleContainer: {
     flex: 1,
