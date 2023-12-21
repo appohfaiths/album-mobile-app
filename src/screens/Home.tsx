@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, SafeAreaView, FlatList, StyleSheet} from 'react-native';
+import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 import {useAppSelector, useAppDispatch} from 'redux/app/hooks';
 import {fetchAlbums} from 'redux/features/albums/albumSlice';
 import {AlbumListItem} from 'components';
@@ -24,10 +18,18 @@ export function Home(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.titleText}>Albums</Text>
+      {isLoading && (
+        <View style={styles.activityIndicator}>
+          <ActivityIndicator
+            animating={true}
+            color={MD2Colors.purple800}
+            size={150}
+          />
+        </View>
+      )}
+      {!isLoading && error ? <Text>Error: {error}</Text> : null}
       <View>
-        <Text style={styles.titleText}>Albums</Text>
-        {isLoading && <ActivityIndicator />}
-        {!isLoading && error ? <Text>Error: {error}</Text> : null}
         {!isLoading && albums.length > 0 ? (
           <FlatList
             data={albums}
@@ -53,5 +55,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
+  },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
