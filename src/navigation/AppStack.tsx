@@ -22,13 +22,7 @@ const HomeStackNavigator = () => {
         component={Home}
         options={{headerShown: false}}
       />
-      <HomeStack.Screen
-        name="AlbumDisplay"
-        component={AlbumDisplay}
-        // options={({route}) => ({
-        //     title: route.params?.data.title,
-        // })}
-      />
+      <HomeStack.Screen name="AlbumDisplay" component={AlbumDisplay} />
     </HomeStack.Navigator>
   );
 };
@@ -39,7 +33,6 @@ export function AppStack(): React.JSX.Element {
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
-        // tabBarStyle: {backgroundColor: '#ccc'},
         tabBarInactiveTintColor: 'green',
         tabBarActiveTintColor: '#AD40AF',
       }}>
