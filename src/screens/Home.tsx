@@ -3,7 +3,7 @@ import {View, Text, SafeAreaView, FlatList, StyleSheet} from 'react-native';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 import {useAppSelector, useAppDispatch} from 'redux/app/hooks';
 import {fetchAlbums} from 'redux/features/albums/albumSlice';
-import {AlbumListItem} from 'components';
+import {AlbumListItem, ErrorStateComponent} from 'components';
 import {Album} from 'types/albumsInterface';
 
 export function Home(): React.JSX.Element {
@@ -16,6 +16,10 @@ export function Home(): React.JSX.Element {
     dispatch(fetchAlbums());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleTryAgain = useCallback(() => {
+    dispatch(fetchAlbums());
+  }, [dispatch]);
 
   const renderItem = useCallback(
     ({item}: {item: Album}) => <AlbumListItem album={item} />,
@@ -34,7 +38,14 @@ export function Home(): React.JSX.Element {
           />
         </View>
       )}
-      {!isLoading && error ? <Text>Error: {error}</Text> : null}
+      {!isLoading && error ? (
+        <View style={styles.activityIndicator}>
+          <ErrorStateComponent
+            errorText={'Something went wrong fetching album list!'}
+            onPress={handleTryAgain}
+          />
+        </View>
+      ) : null}
       <View>
         {!isLoading && albums.length > 0 ? (
           <FlatList

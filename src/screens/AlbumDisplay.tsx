@@ -3,16 +3,22 @@ import {View, SafeAreaView, FlatList, StyleSheet} from 'react-native';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
 import {AlbumDisplayRouteProp} from 'navigation/types';
-import {PhotoItem} from 'components';
-import {useAppSelector} from 'redux/app/hooks';
+import {PhotoItem, ErrorStateComponent} from 'components';
+import {useAppSelector, useAppDispatch} from 'redux/app/hooks';
 import {Photo} from 'types/photosInterface';
+import {fetchPhotos} from 'redux/features/photos/photosSlice';
 
 export function AlbumDisplay(): React.JSX.Element {
   const route = useRoute<AlbumDisplayRouteProp>();
   const photos = useAppSelector(state => state.photos.photos);
   const isLoading = useAppSelector(state => state.photos.isLoading);
-  // const error = useAppSelector(state => state.photos.error);
+  const error = useAppSelector(state => state.photos.error);
+  const dispatch = useAppDispatch();
   const {id} = route.params;
+
+  const handleTryAgain = useCallback(() => {
+    dispatch(fetchPhotos(id));
+  }, [dispatch, id]);
 
   const renderItem = useCallback(
     ({item}: {item: Photo}) => <PhotoItem photo={item} />,
@@ -30,6 +36,14 @@ export function AlbumDisplay(): React.JSX.Element {
           />
         </View>
       )}
+      {!isLoading && error ? (
+        <View style={styles.activityIndicator}>
+          <ErrorStateComponent
+            errorText={'Something went wrong fetching album list!'}
+            onPress={handleTryAgain}
+          />
+        </View>
+      ) : null}
       <View>
         <FlatList
           numColumns={2}
