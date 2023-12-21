@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text, SafeAreaView, FlatList, StyleSheet} from 'react-native';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 import {useAppSelector, useAppDispatch} from 'redux/app/hooks';
 import {fetchAlbums} from 'redux/features/albums/albumSlice';
 import {AlbumListItem} from 'components';
+import {Album} from 'types/albumsInterface';
 
 export function Home(): React.JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,6 +16,11 @@ export function Home(): React.JSX.Element {
     dispatch(fetchAlbums());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const renderItem = useCallback(
+    ({item}: {item: Album}) => <AlbumListItem album={item} />,
+    [],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +39,7 @@ export function Home(): React.JSX.Element {
         {!isLoading && albums.length > 0 ? (
           <FlatList
             data={albums}
-            renderItem={({item}) => <AlbumListItem album={item} />}
+            renderItem={renderItem}
             keyExtractor={album => album.id.toString()}
             onRefresh={() => dispatch(fetchAlbums())}
             refreshing={isLoading}

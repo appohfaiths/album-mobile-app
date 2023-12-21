@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, SafeAreaView, FlatList, StyleSheet} from 'react-native';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
 import {AlbumDisplayRouteProp} from 'navigation/types';
 import {PhotoItem} from 'components';
 import {useAppSelector} from 'redux/app/hooks';
+import {Photo} from 'types/photosInterface';
 
 export function AlbumDisplay(): React.JSX.Element {
   const route = useRoute<AlbumDisplayRouteProp>();
@@ -12,6 +13,11 @@ export function AlbumDisplay(): React.JSX.Element {
   const isLoading = useAppSelector(state => state.photos.isLoading);
   // const error = useAppSelector(state => state.photos.error);
   const {id} = route.params;
+
+  const renderItem = useCallback(
+    ({item}: {item: Photo}) => <PhotoItem photo={item} />,
+    [],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,7 +34,7 @@ export function AlbumDisplay(): React.JSX.Element {
         <FlatList
           numColumns={2}
           data={photos}
-          renderItem={({item}) => <PhotoItem photo={item} />}
+          renderItem={renderItem}
           keyExtractor={photo => photo.id.toString()}
         />
       </View>
